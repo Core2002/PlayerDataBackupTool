@@ -1,4 +1,4 @@
-package fun.fifu.tool.player_inv_backup;
+package fun.fifu.tool.test;
 
 import java.util.Scanner;
 
