@@ -1,4 +1,4 @@
-package fun.fifu.tool.test.pojo;
+package fun.fifu.tool.player_backup.pojo;
 
 import lombok.Data;
 

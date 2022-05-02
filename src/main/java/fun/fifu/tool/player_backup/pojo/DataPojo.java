@@ -1,6 +1,6 @@
-package fun.fifu.tool.test.pojo;
+package fun.fifu.tool.player_backup.pojo;
 
-import fun.fifu.tool.test.DataManger;
+import fun.fifu.tool.player_backup.DataManger;
 import lombok.Data;
 
 import java.util.HashMap;

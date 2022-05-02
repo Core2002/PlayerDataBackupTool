@@ -1,9 +1,9 @@
-package fun.fifu.tool.test;
+package fun.fifu.tool.player_backup;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.io.FileUtil;
-import fun.fifu.tool.test.controller.MongoController;
+import fun.fifu.tool.player_backup.controller.MongoController;
 import org.bson.Document;
 
 import java.util.Arrays;
@@ -15,13 +15,15 @@ public class PlayerInvBackup {
 
     public static void main(String[] args) {
         try {
-            System.out.print("1.备份  2.恢复  3.查看备份  4.清除所有备份  请选择操作（序号）：");
-            switch (scanner.next()) {
-                case "1" -> backup();
-                case "2" -> rollback();
-                case "3" -> viewBackups();
-                case "4" -> delBackups();
-                default -> System.out.println("非法操作");
+            while (true) {
+                System.out.print("1.备份  2.恢复  3.查看备份  4.清除所有备份  请选择操作（序号）：");
+                switch (scanner.next()) {
+                    case "1" -> backup();
+                    case "2" -> rollback();
+                    case "3" -> viewBackups();
+                    case "4" -> delBackups();
+                    default -> System.out.println("非法操作");
+                }
             }
         } catch (Throwable ignored) {
         }

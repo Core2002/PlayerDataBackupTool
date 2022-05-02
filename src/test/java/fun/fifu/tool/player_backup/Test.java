@@ -1,8 +1,7 @@
-package fun.fifu.tool.test;
+package fun.fifu.tool.player_backup;
 
-import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
-import fun.fifu.tool.test.controller.MongoController;
+import fun.fifu.tool.player_backup.controller.MongoController;
 
 import java.util.Arrays;
 

@@ -1,12 +1,12 @@
-package fun.fifu.tool.test.controller;
+package fun.fifu.tool.player_backup.controller;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import fun.fifu.tool.test.DataManger;
-import fun.fifu.tool.test.pojo.DataPojo;
+import fun.fifu.tool.player_backup.DataManger;
+import fun.fifu.tool.player_backup.pojo.DataPojo;
 import org.bson.Document;
 
 
@@ -17,19 +17,21 @@ public class MongoController {
                 .getCollection(DataManger.configPojo.getMongodb_collection());
     }
 
-    public void  backupWithUUID(String uuid) {
+    public String getBase64(String uuid) {
+        return Base64.encode(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path() + uuid + ".dat"));
+    }
+
+    public void backupWithUUID(String uuid) {
         MongoCollection<Document> coll = getCollection();
         Document bson = coll.find(new Document("player_uuid", uuid)).first();
         DataPojo pojo;
         if (bson == null) {
             pojo = new DataPojo();
             pojo.setPlayer_uuid(uuid);
-            pojo.getData().put(DateUtil.now(), Base64.encode(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path() + uuid + ".dat")));
+            pojo.getData().put(DateUtil.now(), getBase64(uuid));
             coll.insertOne(Document.parse(pojo.toJson()));
         } else {
-            pojo = DataManger.gson.fromJson(bson.toJson(), DataPojo.class);
-            pojo.getData().put(DateUtil.now(), Base64.encode(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path() + uuid + ".dat")));
-            coll.findOneAndReplace(new Document("player_uuid", uuid), Document.parse(pojo.toJson()));
+            coll.findOneAndUpdate(new Document("player_uuid", uuid), new Document("$set", new Document("data." + DateUtil.now(), getBase64(uuid))));
         }
     }
 }
