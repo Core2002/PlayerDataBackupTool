@@ -3,11 +3,12 @@ package fun.fifu.tool.player_backup;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.io.FileUtil;
+import com.mongodb.client.FindIterable;
 import fun.fifu.tool.player_backup.controller.MongoController;
+import fun.fifu.tool.player_backup.pojo.DataPojo;
 import org.bson.Document;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class PlayerInvBackup {
     public static Scanner scanner = new Scanner(System.in);
@@ -36,6 +37,18 @@ public class PlayerInvBackup {
     }
 
     private static void viewBackups() {
+        TimeInterval timer = DateUtil.timer();
+        Set<String> temp = new HashSet<>();
+        Map<String, Integer> count = new HashMap<>();
+        mongoController.collection.find(new Document()).forEach(document -> {
+            Map<String, String> dataPojo = DataManger.gson.fromJson(document.toJson(), DataPojo.class).getData();
+            dataPojo.forEach((key, value) -> {
+                temp.add(key);
+                count.put(key, 1 + count.getOrDefault(key, 0));
+            });
+        });
+        temp.forEach(t -> System.out.println(t + " -> " + count.get(t) + "条"));
+        System.out.println("查看完毕，耗时：" + timer.intervalMs() + "毫秒");
     }
 
     private static void rollback() {
