@@ -5,7 +5,7 @@ import fun.fifu.tool.test.controller.MongoController;
 public class Test {
     @org.junit.jupiter.api.Test
     public void configReadTest(){
-        System.out.println(DataManger.configPojo);
+        System.out.println(DataManger.uuid2namePojo);
     }
 
     @org.junit.jupiter.api.Test

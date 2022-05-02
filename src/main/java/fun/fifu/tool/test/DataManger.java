@@ -6,12 +6,20 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fun.fifu.tool.test.pojo.ConfigPojo;
 
+import java.util.Map;
+
 public class DataManger {
     public static ConfigPojo configPojo;
+    public static Map<String, String> uuid2namePojo;
     public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     static {
         configPojo = readData();
+        uuid2namePojo = readUUID2Name();
+    }
+
+    private static Map<String, String> readUUID2Name() {
+        return gson.fromJson(ResourceUtil.readUtf8Str(configPojo.getUuid2name_path()), Map.class);
     }
 
     public static ConfigPojo readData() {

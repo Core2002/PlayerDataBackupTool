@@ -17,7 +17,7 @@ public class MongoController {
                 .getCollection(DataManger.configPojo.getMongodb_collection());
     }
 
-    public void backupWithUUID(String uuid) {
+    public void  backupWithUUID(String uuid) {
         MongoCollection<Document> coll = getCollection();
         Document bson = coll.find(new Document("player_uuid", uuid)).first();
         DataPojo pojo;
