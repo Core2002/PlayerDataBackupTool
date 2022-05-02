@@ -26,4 +26,14 @@ public class Test {
     public void foreachDatTest() {
         Arrays.stream(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path()).list()).filter(file -> file.endsWith(".dat")).forEach(file -> System.out.println(file.substring(0, file.lastIndexOf("."))));
     }
+
+    @org.junit.jupiter.api.Test
+    public void getUUIDTest() {
+        System.out.println(DataManger.getUUID("NekokeCore"));
+    }
+
+    @org.junit.jupiter.api.Test
+    public void ambiguousNameTest(){
+        System.out.println(DataManger.ambiguousName("neko"));
+    }
 }

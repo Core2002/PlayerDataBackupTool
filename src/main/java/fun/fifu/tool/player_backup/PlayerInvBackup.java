@@ -9,7 +9,7 @@ import org.bson.Document;
 import java.util.*;
 
 public class PlayerInvBackup {
-    public static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in).useDelimiter("\n");
     public static MongoController mongoController = new MongoController();
 
     public static void main(String[] args) {
@@ -50,6 +50,27 @@ public class PlayerInvBackup {
     }
 
     private static void rollback() {
+        System.out.print("请输入要还原的玩家：");
+        String name = scanner.next();
+        String uuid = DataManger.getUUID(name);
+        if (uuid == null) {
+            System.out.println("玩家 " + name + " 不存在");
+            var tmp = DataManger.ambiguousName(name);
+            if (!tmp.isEmpty() && tmp.size() < 10)
+                System.out.println("你要找的是不是：" + tmp);
+            return;
+        }
+        Map<String, String> dataPojo = DataManger.gson.fromJson(mongoController.collection.find(new Document("player_uuid", uuid)).first().toJson(), DataPojo.class).getData();
+        System.out.print("请输入要还原的日期：");
+        String date = scanner.next();
+        if (!dataPojo.containsKey(date)) {
+            System.out.println("日期 " + date + " 不存在");
+            System.out.println("可能的日期："+dataPojo.keySet());
+            return;
+        }
+        TimeInterval timer = DateUtil.timer();
+        DataManger.rollBackData(uuid, dataPojo.get(date));
+        System.out.println("恢复成功，耗时：" + timer.intervalMs() + "毫秒");
     }
 
     private static void backup() {
