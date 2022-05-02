@@ -31,7 +31,7 @@ public class PlayerInvBackup {
 
     private static void delBackups() {
         TimeInterval timer = DateUtil.timer();
-        mongoController.getCollection().find(new Document()).forEach(document -> mongoController.getCollection().deleteOne(document));
+        mongoController.collection.find(new Document()).forEach(document -> mongoController.collection.deleteOne(document));
         System.out.println("清除完毕，耗时：" + timer.intervalMs() + "毫秒");
     }
 

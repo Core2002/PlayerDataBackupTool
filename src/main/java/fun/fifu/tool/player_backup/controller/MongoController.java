@@ -11,18 +11,17 @@ import org.bson.Document;
 
 
 public class MongoController {
-    public MongoCollection<Document> getCollection() {
-        return MongoClients.create(DataManger.configPojo.getMongodb_uri())
+    public MongoCollection<Document> collection= MongoClients.create(DataManger.configPojo.getMongodb_uri())
                 .getDatabase(DataManger.configPojo.getMongodb_database())
                 .getCollection(DataManger.configPojo.getMongodb_collection());
-    }
+
 
     public String getBase64(String uuid) {
         return Base64.encode(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path() + uuid + ".dat"));
     }
 
     public void backupWithUUID(String uuid) {
-        MongoCollection<Document> coll = getCollection();
+        MongoCollection<Document> coll = collection;
         Document bson = coll.find(new Document("player_uuid", uuid)).first();
         DataPojo pojo;
         if (bson == null) {
