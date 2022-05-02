@@ -2,8 +2,6 @@ package fun.fifu.tool.player_backup;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
-import cn.hutool.core.io.FileUtil;
-import com.mongodb.client.FindIterable;
 import fun.fifu.tool.player_backup.controller.MongoController;
 import fun.fifu.tool.player_backup.pojo.DataPojo;
 import org.bson.Document;
@@ -56,7 +54,7 @@ public class PlayerInvBackup {
 
     private static void backup() {
         TimeInterval timer = DateUtil.timer();
-        Arrays.stream(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path()).list()).filter(file -> file.endsWith(".dat")).forEach(file -> mongoController.backupWithUUID(file.substring(0, file.lastIndexOf("."))));
+        mongoController.backupAll();
         System.out.println("备份成功，耗时：" + timer.intervalMs() + "毫秒");
     }
 }
