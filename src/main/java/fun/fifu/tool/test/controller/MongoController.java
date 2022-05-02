@@ -29,7 +29,7 @@ public class MongoController {
         } else {
             pojo = DataManger.gson.fromJson(bson.toJson(), DataPojo.class);
             pojo.getData().put(DateUtil.now(), Base64.encode(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path() + uuid + ".dat")));
-            coll.findOneAndUpdate(bson, Document.parse(pojo.toJson()));
+            coll.findOneAndReplace(new Document("player_uuid", uuid), Document.parse(pojo.toJson()));
         }
     }
 }
