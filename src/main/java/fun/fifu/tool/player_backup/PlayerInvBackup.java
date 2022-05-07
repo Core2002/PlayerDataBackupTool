@@ -17,13 +17,14 @@ public class PlayerInvBackup {
     public static void main(String[] args) {
         try {
             while (true) {
-                System.out.print("1.备份  2.恢复  3.查看备份  4.清除所有备份  5.按时间批量恢复  请选择操作（序号）：");
+                System.out.print("1.备份  2.恢复  3.查看备份  4.清除所有备份  5.按时间批量恢复  exit:退出  请选择操作（序号）：");
                 switch (scanner.next()) {
                     case "1" -> backup();
                     case "2" -> rollback();
                     case "3" -> viewBackups();
                     case "4" -> delBackups();
                     case "5" -> rollbackAll();
+                    case "exit" -> System.exit(0);
                     default -> System.out.println("非法操作");
                 }
             }
