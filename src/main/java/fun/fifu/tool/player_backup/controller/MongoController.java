@@ -11,6 +11,7 @@ import org.bson.Document;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 
 public class MongoController {
@@ -33,9 +34,8 @@ public class MongoController {
     private void backupWithUUID(String uuid, String date) {
         MongoCollection<Document> coll = collection;
         Document bson = coll.find(new Document("player_uuid", uuid)).first();
-        DataPojo pojo;
         if (bson == null) {
-            pojo = new DataPojo();
+            DataPojo pojo = new DataPojo();
             pojo.setPlayer_uuid(uuid);
             pojo.getData().put(DateUtil.now(), getBase64(uuid));
             coll.insertOne(Document.parse(pojo.toJson()));
