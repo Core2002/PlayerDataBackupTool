@@ -21,6 +21,10 @@ public class DataManger {
         uuid2namePojo = readUUID2Name();
     }
 
+    private DataManger() {
+        throw new IllegalStateException("Utility class");
+    }
+
     private static Map<String, String> readUUID2Name() {
         return gson.fromJson(ResourceUtil.readUtf8Str(configPojo.getUuid2name_path()), Map.class);
     }
