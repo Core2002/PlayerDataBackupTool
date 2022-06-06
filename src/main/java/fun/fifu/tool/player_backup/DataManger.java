@@ -48,9 +48,9 @@ public class DataManger {
 
     public static Set<String> ambiguousName(String name) {
         Set<String> tmp = new HashSet<>();
-        uuid2namePojo.entrySet().forEach(entry -> {
-            if (entry.getValue().toLowerCase().contains(name.toLowerCase())) {
-                tmp.add(entry.getValue());
+        uuid2namePojo.forEach((key, value) -> {
+            if (value.toLowerCase().contains(name.toLowerCase())) {
+                tmp.add(value);
             }
         });
         return tmp;
