@@ -10,6 +10,7 @@ import fun.fifu.tool.player_backup.pojo.DataPojo;
 import org.bson.Document;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class MongoController {
@@ -24,7 +25,7 @@ public class MongoController {
 
     public void backupAll() {
         String now = DateUtil.now();
-        Arrays.stream(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path()).list())
+        Arrays.stream(Objects.requireNonNull(FileUtil.file(DataManger.configPojo.getWorld_playerdata_path()).list()))
                 .filter(file -> file.endsWith(".dat"))
                 .forEach(file -> backupWithUUID(file.substring(0, file.lastIndexOf(".")), now));
     }
